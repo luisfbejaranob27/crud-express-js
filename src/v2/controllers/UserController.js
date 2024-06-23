@@ -1,58 +1,60 @@
-const userService = require("../services/UserService");
+const userService = require('../services/UserService')
+const { checkParameters, printParameters } = require('../../utils/BodyUtil')
 
 const findAll = (req, res) => {
-    const users = userService.findAll();
+  const users = userService.findAll()
 
-    if(users.length === 0) return res.status(404).send({"error": "Users not found"});
+  if (users.length === 0) res.status(404).send({ error: 'Users not found' })
 
-    return res.send(users);
-};
+  return res.send(users)
+}
 
 const findById = (req, res) => {
-    const user = userService.findById(req.params._id);
+  const user = userService.findById(req.params._id)
 
-    if(!user) return res.status(404).send({"error": "User not found"});
+  if (!user) res.status(404).send({ error: 'User not found' })
 
-    return res.send(user);
-};
+  return res.send(user)
+}
 
 const create = (req, res) => {
-    const {body} = req;
+  const { body } = req
 
-    if(!body.name || !body.email || !body.phone || !body.address) {
-        return res.status(400).send({"error": "Please enter a valid payload"});
-    }
+  const bodyParameters = process.env.USER_BODY_PARAMETERS.split(',')
+  const parametersNotFound = checkParameters(bodyParameters, body)
 
-    const created = userService.create(body)
-    return res.status(201).send(created);
-};
+  if (parametersNotFound.length === 1) res.status(400).send({ error: `The ${printParameters(parametersNotFound)} parameter are mandatory.` })
+  if (parametersNotFound.length > 1) res.status(400).send({ error: `The ${printParameters(parametersNotFound)} parameters are mandatory.` })
+
+  const created = userService.create(body)
+  return res.status(201).send(created)
+}
 
 const update = (req, res) => {
-    const {body} = req;
+  const {
+    body,
+    params: { _id }
+  } = req
 
-    if(!body._id) {
-        return res.status(400).send({"error": "_Id is required"});
-    }
+  const updated = userService.update(_id, body)
 
-    const updated = userService.update(req.body);
+  if (!updated) res.status(404).send({ error: 'User not found' })
 
-    if(!updated) return res.status(404).send({"error": "User not found"});
-
-    return res.send(updated);
-};
+  return res.send(updated)
+}
 
 const deleteById = (req, res) => {
-    const deleted = userService.deleteById(req.params._id);
+  const deleted = userService.deleteById(req.params._id)
 
-    if(!deleted) return res.status(404).send({"error": "User not found"});
+  if (!deleted) res.status(404).send({ error: 'User not found' })
 
-    res.status(204).send()
-};
+  res.status(204).send()
+}
 
 module.exports = {
-    findAll,
-    findById,
-    create,
-    update,
-    deleteById
+  findAll,
+  findById,
+  create,
+  update,
+  deleteById
 }
