@@ -10,6 +10,12 @@ GET localhost:2786/api/v1/users/1
 ### Find By Id V2
 GET localhost:2786/api/v2/users/b0fdba42-f727-41af-b6ff-cdb01dcbd8e2
 
+### Find By Email V1
+GET localhost:2786/api/v1/users/bessiebenton@omnigog.com?filter=email
+
+### Find By Email V1
+GET localhost:2786/api/v2/users/bessiebenton@omnigog.com?filter=email
+
 ### Create V1
 POST localhost:2786/api/v1/users
 Content-Type: application/json

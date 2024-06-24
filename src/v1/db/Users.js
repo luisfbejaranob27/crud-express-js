@@ -8,6 +8,10 @@ const findById = (id) => {
   return dbV1.find((user) => user.id === Number(id))
 }
 
+const findByEmail = (email) => {
+  return dbV1.find((user) => user.email === email)
+}
+
 const create = (body) => {
   const newUser = {
     id: id(),
@@ -48,6 +52,7 @@ const deleteById = (id) => {
 module.exports = {
   findAll,
   findById,
+  findByEmail,
   create,
   update,
   deleteById

@@ -9,6 +9,10 @@ const findById = (id) => {
   return dbV2.find((user) => user._id === id)
 }
 
+const findByEmail = (email) => {
+  return dbV2.find((user) => user.email === email)
+}
+
 const create = (body) => {
   const newUser = {
     id: uuid(),
@@ -44,6 +48,7 @@ const deleteById = (_id) => {
 module.exports = {
   findAll,
   findById,
+  findByEmail,
   create,
   update,
   deleteById

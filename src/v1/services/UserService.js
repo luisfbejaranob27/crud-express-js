@@ -4,12 +4,19 @@ const { updateUserValues } = require('../../utils/BodyUtil')
 const findAll = () => {
   return user.findAll()
 }
+
 const findById = (id) => {
   return user.findById(id)
 }
+
+const findByEmail = (email) => {
+  return user.findByEmail(email)
+}
+
 const create = (body) => {
   return user.create(body)
 }
+
 const update = (id, body) => {
   const userDb = findById(id)
 
@@ -34,6 +41,7 @@ const deleteById = (id) => {
 module.exports = {
   findAll,
   findById,
+  findByEmail,
   create,
   update,
   deleteById

@@ -9,12 +9,27 @@ const findAll = (req, res) => {
   return res.send(users)
 }
 
-const findById = (req, res) => {
-  const user = userService.findById(req.params._id)
+const find = (req, res) => {
+  const {
+    params: { value },
+    query: { filter }
+  } = req
+  if (!filter) {
+    const user = userService.findById(value)
 
-  if (!user) res.status(404).send({ error: 'User not found' })
+    if (!user) res.status(404).send({ error: `User with id: ${value} not found` })
 
-  return res.send(user)
+    return res.send(user)
+  }
+  if (filter === 'email') {
+    const user = userService.findByEmail(value)
+
+    if (!user) res.status(404).send({ error: `User with email: ${value} not found` })
+
+    return res.send(user)
+  } else {
+    res.status(404).send({ error: `Filter: ${filter} not found` })
+  }
 }
 
 const create = (req, res) => {
@@ -53,7 +68,7 @@ const deleteById = (req, res) => {
 
 module.exports = {
   findAll,
-  findById,
+  find,
   create,
   update,
   deleteById
