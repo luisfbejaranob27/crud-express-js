@@ -1,0 +1,61 @@
+### Find All V1
+GET http://localhost:2786/api/v1/users
+
+### Find All V2
+GET http://localhost:2786/api/v2/users
+
+### Find By Id V1
+GET localhost:2786/api/v1/users/1
+
+### Find By Id V2
+GET localhost:2786/api/v2/users/b0fdba42-f727-41af-b6ff-cdb01dcbd8e2
+
+### Create V1
+POST localhost:2786/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "Dyer Whitfield",
+  "email": "dyerwhitfield@omnigog.com",
+  "phone": "+57 (932) 440-3222",
+  "address": "984 Tehama Street, Bergoo, Missouri, 2668"
+}
+
+### Create V2
+POST localhost:2786/api/v2/users
+Content-Type: application/json
+
+{
+  "name": "Dyer Whitfield",
+  "email": "dyerwhitfield@omnigog.com",
+  "phone": "+57 (932) 440-3222",
+  "address": "984 Tehama Street, Bergoo, Missouri, 2668"
+}
+
+### Update V1
+PUT localhost:2786/api/v1/users/1
+Content-Type: application/json
+
+{
+  "name": "Luis Bejarano",
+  "email": "luisfbejaranob@omnigog.com",
+  "phone": "+57 (310) 762-0109",
+  "address": "Carrera 77 # 88A - 30"
+}
+
+### Update V2
+PUT localhost:2786/api/v2/users/b0fdba42-f727-41af-b6ff-cdb01dcbd8e2
+Content-Type: application/json
+
+{
+  "name": "Luis Bejarano",
+  "email": "luisfbejaranob@omnigog.com",
+  "phone": "+57 (310) 762-0109",
+  "address": "Carrera 77 # 88A - 30"
+}
+
+### Find By Id V1
+DELETE localhost:2786/api/v1/users/1
+
+### Find By Id V2
+DELETE localhost:2786/api/v2/users/b0fdba42-f727-41af-b6ff-cdb01dcbd8e2
