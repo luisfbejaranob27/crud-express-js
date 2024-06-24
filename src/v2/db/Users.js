@@ -1,5 +1,5 @@
 const dbV2 = require('./UsersV2.json').users
-const { v4: uuid } = require('uuid')
+const crypto = require('node:crypto')
 
 const findAll = () => {
   return dbV2
@@ -15,7 +15,7 @@ const findByEmail = (email) => {
 
 const create = (body) => {
   const newUser = {
-    id: uuid(),
+    id: crypto.randomUUID(),
     name: body.name,
     email: body.email,
     phone: body.phone,
