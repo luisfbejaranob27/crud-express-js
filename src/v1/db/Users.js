@@ -15,10 +15,7 @@ const findByEmail = (email) => {
 const create = (body) => {
   const newUser = {
     id: id(),
-    name: body.name,
-    email: body.email,
-    phone: body.phone,
-    address: body.address,
+    ...body,
     createdAt: new Date()
   }
 

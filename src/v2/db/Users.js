@@ -16,10 +16,7 @@ const findByEmail = (email) => {
 const create = (body) => {
   const newUser = {
     id: crypto.randomUUID(),
-    name: body.name,
-    email: body.email,
-    phone: body.phone,
-    address: body.address,
+    ...body,
     createdAt: new Date()
   }
 

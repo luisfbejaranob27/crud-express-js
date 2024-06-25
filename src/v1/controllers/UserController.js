@@ -1,10 +1,11 @@
 const userService = require('../services/UserService')
 const { checkParameters, printParameters } = require('../../utils/BodyUtil')
+const { StatusCodes } = require('http-status-codes')
 
 const findAll = (req, res) => {
   const users = userService.findAll()
 
-  if (users.length === 0) res.status(404).send({ error: 'Users not found' })
+  if (users.length === 0) return res.status(StatusCodes.NOT_FOUND).send({ error: 'Users not found' })
 
   return res.send(users)
 }
@@ -17,18 +18,18 @@ const find = (req, res) => {
   if (!filter) {
     const user = userService.findById(value)
 
-    if (!user) res.status(404).send({ error: `User with id: ${value} not found` })
+    if (!user) return res.status(StatusCodes.NOT_FOUND).send({ error: `User with id: ${value} not found` })
 
     return res.send(user)
   }
   if (filter === 'email') {
     const user = userService.findByEmail(value)
 
-    if (!user) res.status(404).send({ error: `User with email: ${value} not found` })
+    if (!user) return res.status(StatusCodes.NOT_FOUND).send({ error: `User with email: ${value} not found` })
 
     return res.send(user)
   } else {
-    res.status(404).send({ error: `Filter: ${filter} not found` })
+    return res.status(StatusCodes.NOT_FOUND).send({ error: `Filter: ${filter} not found` })
   }
 }
 
@@ -38,11 +39,13 @@ const create = (req, res) => {
   const bodyParameters = process.env.USER_BODY_PARAMETERS.split(',')
   const parametersNotFound = checkParameters(bodyParameters, body)
 
-  if (parametersNotFound.length === 1) res.status(400).send({ error: `The ${printParameters(parametersNotFound)} parameter are mandatory.` })
-  if (parametersNotFound.length > 1) res.status(400).send({ error: `The ${printParameters(parametersNotFound)} parameters are mandatory.` })
+  if (parametersNotFound.length === 1)
+    return res.status(StatusCodes.BAD_REQUEST).send({ error: `The ${printParameters(parametersNotFound)} parameter are mandatory.` })
+  if (parametersNotFound.length > 1)
+    return res.status(StatusCodes.BAD_REQUEST).send({ error: `The ${printParameters(parametersNotFound)} parameters are mandatory.` })
 
   const created = userService.create(body)
-  return res.status(201).send(created)
+  return res.status(StatusCodes.CREATED).send(created)
 }
 
 const update = (req, res) => {
@@ -53,7 +56,7 @@ const update = (req, res) => {
 
   const updated = userService.update(id, body)
 
-  if (!updated) res.status(404).send({ error: 'User not found' })
+  if (!updated) return res.status(StatusCodes.NOT_FOUND).send({ error: 'User not found' })
 
   return res.send(updated)
 }
@@ -61,9 +64,9 @@ const update = (req, res) => {
 const deleteById = (req, res) => {
   const deleted = userService.deleteById(req.params.id)
 
-  if (!deleted) res.status(404).send({ error: 'User not found' })
+  if (!deleted) return res.status(StatusCodes.NOT_FOUND).send({ error: 'User not found' })
 
-  res.status(204).send()
+  return res.status(StatusCodes.NO_CONTENT).send()
 }
 
 module.exports = {

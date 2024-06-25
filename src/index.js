@@ -1,9 +1,10 @@
 console.clear()
 const express = require('express')
 const dotenv = require('dotenv')
+const { StatusCodes } = require('http-status-codes')
 
-const v1UserRouter = require('./v1/routes/UserRouter.js')
-const v2UserRouter = require('./v2/routes/UserRouter.js')
+const v1UserRouter = require('./v1/routes/UserRouter')
+const v2UserRouter = require('./v2/routes/UserRouter')
 
 dotenv.config()
 
@@ -16,7 +17,7 @@ app.use('/api/v1', v1UserRouter)
 app.use('/api/v2', v2UserRouter)
 
 app.use((req, res) => {
-  res.status(404).send({ error: 'Path not found 💥' })
+  res.status(StatusCodes.NOT_FOUND).send({ error: 'Path not found 💥' })
 })
 
 app.listen(port, () => {
