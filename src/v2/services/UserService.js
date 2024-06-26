@@ -1,5 +1,4 @@
 const user = require('../db/Users.js');
-const { updateUserValues } = require('../../utils/BodyUtil');
 
 const findAll = () => {
   return user.findAll();
@@ -20,11 +19,14 @@ const create = (body) => {
 const update = (_id, body) => {
   const userDb = findById(_id);
 
-  if (!userDb) {
-    return null;
-  }
+  if (!userDb) return null;
 
-  return user.update(updateUserValues(userDb, body));
+  const newBody = {
+    ...userDb,
+    ...body
+  };
+
+  return user.update(newBody);
 };
 
 const deleteById = (_id) => {

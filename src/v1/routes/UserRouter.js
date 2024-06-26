@@ -9,7 +9,7 @@ router
   .get('/users', userController.findAll)
   .get('/users/:value', userController.find)
   .post('/users', validateBody(userSchema), userController.create)
-  .put('/users/:id', validatePartialBody(userSchema), userController.update)
+  .patch('/users/:id', validatePartialBody(userSchema), userController.update)
   .delete('/users/:id', userController.deleteById);
 
 module.exports = router;

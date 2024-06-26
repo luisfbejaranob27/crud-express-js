@@ -25,13 +25,18 @@ const create = (body) => {
 };
 
 const update = (body) => {
-  dbV2.forEach((user) => {
-    if (user._id === body._id) {
-      body.updatedAt = new Date();
-      return body;
-    }
-  });
-  return body;
+  const index = dbV2.findIndex((user) => user._id === body._id);
+
+  const newBody = {
+    ...body,
+    updatedAt: new Date()
+  };
+
+  if (index > -1) {
+    dbV2[index] = newBody;
+    return newBody;
+  }
+  return null;
 };
 
 const deleteById = (_id) => {

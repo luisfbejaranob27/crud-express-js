@@ -39,24 +39,22 @@ Content-Type: application/json
 }
 
 ### Update V1
-PUT localhost:2786/api/v1/users/1
+PATCH localhost:2786/api/v1/users/1
 Content-Type: application/json
 
 {
   "name": "Luis Bejarano",
   "email": "luisfbejaranob@omnigog.com",
-  "phone": "+57 (310) 762-0109",
   "address": "Carrera 77 # 88A - 30"
 }
 
 ### Update V2
-PUT localhost:2786/api/v2/users/b0fdba42-f727-41af-b6ff-cdb01dcbd8e2
+PATCH localhost:2786/api/v2/users/b0fdba42-f727-41af-b6ff-cdb01dcbd8e2
 Content-Type: application/json
 
 {
   "name": "Luis Bejarano",
   "email": "luisfbejaranob@omnigog.com",
-  "phone": "+57 (310) 762-0109",
   "address": "Carrera 77 # 88A - 30"
 }
 

@@ -19,7 +19,7 @@ function validateBody(schema) {
 function validatePartialBody(schema) {
   return (req, res, next) => {
     try {
-      schema.partial().parse(req.body);
+      req.body = schema.partial().parse(req.body);
       next();
     } catch (error) {
       if (error instanceof ZodError) {
