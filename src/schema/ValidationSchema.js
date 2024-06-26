@@ -1,22 +1,40 @@
-const { ZodError } = require('zod')
-const { StatusCodes } = require('http-status-codes')
+const { ZodError } = require('zod');
+const { StatusCodes } = require('http-status-codes');
 
-function validateData(schema) {
+function validateBody(schema) {
   return (req, res, next) => {
     try {
-      schema.parse(req.body)
-      next()
+      schema.parse(req.body);
+      next();
     } catch (error) {
       if (error instanceof ZodError) {
-        const errorMessages = error.errors.map((issue) => ({
-          message: `${issue.path} is ${issue.message}`
-        }))
-        res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid data', details: errorMessages })
+        res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid data', details: buildErrorMessages(error.errors) });
       } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
       }
     }
-  }
+  };
 }
 
-module.exports = { validateData }
+function validatePartialBody(schema) {
+  return (req, res, next) => {
+    try {
+      schema.partial().parse(req.body);
+      next();
+    } catch (error) {
+      if (error instanceof ZodError) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid data', details: buildErrorMessages(error.errors) });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' });
+      }
+    }
+  };
+}
+
+function buildErrorMessages(errors) {
+  return errors.map((issue) => ({
+    message: `${issue.path} is ${issue.message}`
+  }));
+}
+
+module.exports = { validateBody, validatePartialBody };

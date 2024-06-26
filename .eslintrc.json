@@ -4,6 +4,8 @@
     "node": true
   },
   "rules": {
+    "semi": [2, "always"],
+    "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
     "space-before-function-paren": ["error", "never"]
   }
 }

@@ -1,42 +1,42 @@
-const user = require('../db/Users.js')
-const { updateUserValues } = require('../../utils/BodyUtil')
+const user = require('../db/Users.js');
+const { updateUserValues } = require('../../utils/BodyUtil');
 
 const findAll = () => {
-  return user.findAll()
-}
+  return user.findAll();
+};
 
 const findById = (id) => {
-  return user.findById(id)
-}
+  return user.findById(id);
+};
 
 const findByEmail = (email) => {
-  return user.findByEmail(email)
-}
+  return user.findByEmail(email);
+};
 
 const create = (body) => {
-  return user.create(body)
-}
+  return user.create(body);
+};
 
 const update = (id, body) => {
-  const userDb = findById(id)
+  const userDb = findById(id);
 
   if (!userDb) {
-    return null
+    return null;
   }
 
-  return user.update(updateUserValues(userDb, body))
-}
+  return user.update(updateUserValues(userDb, body));
+};
 
 const deleteById = (id) => {
-  const userDb = findById(id)
+  const userDb = findById(id);
 
   if (!userDb) {
-    return false
+    return false;
   }
 
-  user.deleteById(id)
-  return true
-}
+  user.deleteById(id);
+  return true;
+};
 
 module.exports = {
   findAll,
@@ -45,4 +45,4 @@ module.exports = {
   create,
   update,
   deleteById
-}
+};
