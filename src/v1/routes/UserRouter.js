@@ -1,7 +1,7 @@
-const { Router } = require('express');
-const userController = require('../controllers/UserController.js');
-const { validateBody, validatePartialBody } = require('../../schema/ValidationSchema');
-const { userSchema } = require('../../schema/User');
+import { Router } from 'express';
+import userController from '../controllers/UserController.js';
+import { validateBody, validatePartialBody } from '../../schema/ValidationSchema.js';
+import { userSchema } from '../../schema/User.js';
 
 const router = Router();
 
@@ -12,4 +12,4 @@ router
   .patch('/users/:id', validatePartialBody(userSchema), userController.update)
   .delete('/users/:id', userController.deleteById);
 
-module.exports = router;
+export default router;

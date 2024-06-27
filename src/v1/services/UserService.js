@@ -1,4 +1,4 @@
-const user = require('../db/Users.js');
+import user from '../db/Users.js';
 
 const findAll = () => {
   return user.findAll();
@@ -40,7 +40,7 @@ const deleteById = (id) => {
   return true;
 };
 
-module.exports = {
+export default {
   findAll,
   findById,
   findByEmail,

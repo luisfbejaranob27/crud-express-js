@@ -1,15 +1,17 @@
-const dbV1 = require('./UsersV1.json').users;
+import dbV1 from './UsersV1.json' assert { type: "json" };
+
+const users = dbV1.users;
 
 const findAll = () => {
-  return dbV1;
+  return users;
 };
 
 const findById = (id) => {
-  return dbV1.find((user) => user.id === Number(id));
+  return users.find((user) => user.id === Number(id));
 };
 
 const findByEmail = (email) => {
-  return dbV1.find((user) => user.email === email);
+  return users.find((user) => user.email === email);
 };
 
 const create = (body) => {
@@ -19,17 +21,17 @@ const create = (body) => {
     createdAt: new Date()
   };
 
-  dbV1.push(newUser);
+  users.push(newUser);
   return newUser;
 };
 
 const id = () => {
-  const length = dbV1.length;
+  const length = users.length;
   return length > 0 ? length + 1 : 1;
 };
 
 const update = (body) => {
-  const index = dbV1.findIndex((user) => user.id === Number(body.id));
+  const index = users.findIndex((user) => user.id === Number(body.id));
 
   const newBody = {
     ...body,
@@ -37,21 +39,21 @@ const update = (body) => {
   };
 
   if (index > -1) {
-    dbV1[index] = newBody;
+    users[index] = newBody;
     return newBody;
   }
   return null;
 };
 
 const deleteById = (id) => {
-  const userIndex = dbV1.findIndex((user) => user.id === Number(id));
+  const userIndex = users.findIndex((user) => user.id === Number(id));
 
   if (userIndex > -1) {
-    dbV1.splice(userIndex, 1);
+    users.splice(userIndex, 1);
   }
 };
 
-module.exports = {
+export default {
   findAll,
   findById,
   findByEmail,
