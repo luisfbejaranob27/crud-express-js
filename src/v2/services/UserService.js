@@ -1,50 +1,43 @@
 import user from '../db/Users.js';
 
-const findAll = () => {
-  return user.findAll();
-};
-
-const findById = (_id) => {
-  return user.findById(_id);
-};
-
-const findByEmail = (email) => {
-  return user.findByEmail(email);
-};
-
-const create = (body) => {
-  return user.create(body);
-};
-
-const update = (_id, body) => {
-  const userDb = findById(_id);
-
-  if (!userDb) return null;
-
-  const newBody = {
-    ...userDb,
-    ...body
+export class UserService {
+  static findAll = () => {
+    return user.findAll();
   };
 
-  return user.update(newBody);
-};
+  static findById = (_id) => {
+    return user.findById(_id);
+  };
 
-const deleteById = (_id) => {
-  const userDb = findById(_id);
+  static findByEmail = (email) => {
+    return user.findByEmail(email);
+  };
 
-  if (!userDb) {
-    return false;
-  }
+  static create = (body) => {
+    return user.create(body);
+  };
 
-  user.deleteById(_id);
-  return true;
-};
+  static update = (_id, body) => {
+    const userDb = UserService.findById(_id);
 
-export default {
-  findAll,
-  findById,
-  findByEmail,
-  create,
-  update,
-  deleteById
-};
+    if (!userDb) return null;
+
+    const newBody = {
+      ...userDb,
+      ...body
+    };
+
+    return user.update(newBody);
+  };
+
+  static deleteById = (_id) => {
+    const userDb = UserService.findById(_id);
+
+    if (!userDb) {
+      return false;
+    }
+
+    user.deleteById(_id);
+    return true;
+  };
+}

@@ -1,17 +1,15 @@
-import dbV1 from './UsersV1.json' assert { type: "json" };
-
-const users = dbV1.users;
+import dbV1 from './Users.json' with { type: "json" };
 
 const findAll = () => {
-  return users;
+  return dbV1;
 };
 
 const findById = (id) => {
-  return users.find((user) => user.id === Number(id));
+  return dbV1.find((user) => user.id === Number(id));
 };
 
 const findByEmail = (email) => {
-  return users.find((user) => user.email === email);
+  return dbV1.find((user) => user.email === email);
 };
 
 const create = (body) => {
@@ -21,17 +19,17 @@ const create = (body) => {
     createdAt: new Date()
   };
 
-  users.push(newUser);
+  dbV1.push(newUser);
   return newUser;
 };
 
 const id = () => {
-  const length = users.length;
+  const length = dbV1.length;
   return length > 0 ? length + 1 : 1;
 };
 
 const update = (body) => {
-  const index = users.findIndex((user) => user.id === Number(body.id));
+  const index = dbV1.findIndex((user) => user.id === Number(body.id));
 
   const newBody = {
     ...body,
@@ -39,17 +37,17 @@ const update = (body) => {
   };
 
   if (index > -1) {
-    users[index] = newBody;
+    dbV1[index] = newBody;
     return newBody;
   }
   return null;
 };
 
 const deleteById = (id) => {
-  const userIndex = users.findIndex((user) => user.id === Number(id));
+  const userIndex = dbV1.findIndex((user) => user.id === Number(id));
 
   if (userIndex > -1) {
-    users.splice(userIndex, 1);
+    dbV1.splice(userIndex, 1);
   }
 };
 

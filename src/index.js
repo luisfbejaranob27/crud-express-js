@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import statusCodes from 'http-status-codes';
 import v1UserRouter from './v1/routes/UserRouter.js';
 import v2UserRouter from './v2/routes/UserRouter.js';
-console.clear();
 
+console.clear();
 dotenv.config();
 
 const app = express();

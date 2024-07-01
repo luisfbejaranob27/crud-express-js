@@ -1,18 +1,16 @@
-import dbV2 from './UsersV2.json' assert { type: "json" };
+import dbV2 from './Users.json' with { type: "json" };
 import crypto from 'node:crypto';
 
-const users = dbV2.users;
-
 const findAll = () => {
-  return users;
+  return dbV2;
 };
 
 const findById = (id) => {
-  return users.find((user) => user._id === id);
+  return dbV2.find((user) => user._id === id);
 };
 
 const findByEmail = (email) => {
-  return users.find((user) => user.email === email);
+  return dbV2.find((user) => user.email === email);
 };
 
 const create = (body) => {
@@ -22,12 +20,12 @@ const create = (body) => {
     createdAt: new Date()
   };
 
-  users.push(newUser);
+  dbV2.push(newUser);
   return newUser;
 };
 
 const update = (body) => {
-  const index = users.findIndex((user) => user._id === body._id);
+  const index = dbV2.findIndex((user) => user._id === body._id);
 
   const newBody = {
     ...body,
@@ -35,17 +33,17 @@ const update = (body) => {
   };
 
   if (index > -1) {
-    users[index] = newBody;
+    dbV2[index] = newBody;
     return newBody;
   }
   return null;
 };
 
 const deleteById = (_id) => {
-  const userIndex = users.findIndex((user) => user._id === _id);
+  const userIndex = dbV2.findIndex((user) => user._id === _id);
 
   if (userIndex > -1) {
-    users.splice(userIndex, 1);
+    dbV2.splice(userIndex, 1);
   }
 };
 

@@ -1,69 +1,63 @@
-import userService from '../services/UserService.js';
+import { UserService } from '../services/UserService.js';
 import statusCode from 'http-status-codes';
 
-const findAll = (req, res) => {
-  const users = userService.findAll();
+export class UserController {
+  static findAll = async(req, res) => {
+    const users = await UserService.findAll();
 
-  if (users.length === 0) return res.status(statusCode.NOT_FOUND).send({ error: 'Users not found' });
+    if (users.length === 0) return res.status(statusCode.NOT_FOUND).send({ error: 'Users not found' });
 
-  return res.send(users);
-};
+    return res.send(users);
+  };
 
-const find = (req, res) => {
-  const {
-    params: { value },
-    query: { filter }
-  } = req;
-  if (!filter) {
-    const user = userService.findById(value);
+  static find = async(req, res) => {
+    const {
+      params: { value },
+      query: { filter }
+    } = req;
+    if (!filter) {
+      const user = await UserService.findById(value);
 
-    if (!user) return res.status(statusCode.NOT_FOUND).send({ error: `User with id: ${value} not found` });
+      if (!user) return res.status(statusCode.NOT_FOUND).send({ error: `User with id: ${value} not found` });
 
-    return res.send(user);
-  }
-  if (filter === 'email') {
-    const user = userService.findByEmail(value);
+      return res.send(user);
+    }
+    if (filter === 'email') {
+      const user = await UserService.findByEmail(value);
 
-    if (!user) return res.status(statusCode.NOT_FOUND).send({ error: `User with email: ${value} not found` });
+      if (!user) return res.status(statusCode.NOT_FOUND).send({ error: `User with email: ${value} not found` });
 
-    return res.send(user);
-  } else {
-    return res.status(statusCode.NOT_FOUND).send({ error: `Filter: ${filter} not found` });
-  }
-};
+      return res.send(user);
+    } else {
+      return res.status(statusCode.NOT_FOUND).send({ error: `Filter: ${filter} not found` });
+    }
+  };
 
-const create = (req, res) => {
-  const { body } = req;
+  static create = async(req, res) => {
+    const { body } = req;
 
-  const created = userService.create(body);
-  return res.status(statusCode.CREATED).send(created);
-};
+    const created = await UserService.create(body);
+    return res.status(statusCode.CREATED).send(created);
+  };
 
-const update = (req, res) => {
-  const {
-    body,
-    params: { id }
-  } = req;
+  static update = async(req, res) => {
+    const {
+      body,
+      params: { id }
+    } = req;
 
-  const updated = userService.update(id, body);
+    const updated = await UserService.update(id, body);
 
-  if (!updated) return res.status(statusCode.NOT_FOUND).send({ error: 'User not found' });
+    if (!updated) return res.status(statusCode.NOT_FOUND).send({ error: 'User not found' });
 
-  return res.send(updated);
-};
+    return res.send(updated);
+  };
 
-const deleteById = (req, res) => {
-  const deleted = userService.deleteById(req.params.id);
+  static deleteById = async(req, res) => {
+    const deleted = await UserService.deleteById(req.params.id);
 
-  if (!deleted) return res.status(statusCode.NOT_FOUND).send({ error: 'User not found' });
+    if (!deleted) return res.status(statusCode.NOT_FOUND).send({ error: 'User not found' });
 
-  return res.status(statusCode.NO_CONTENT).send();
-};
-
-export default {
-  findAll,
-  find,
-  create,
-  update,
-  deleteById
-};
+    return res.status(statusCode.NO_CONTENT).send();
+  };
+}
